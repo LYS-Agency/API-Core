@@ -2,7 +2,8 @@ export type Builder = {
     name: string,
     path: string,
     request: RequestType,
-    middlewares: Array<(req: Request, res: Response) => void>
+    middlewares: Array<MiddlewaresFunction>,
+    dataTransformers: Array<DataTransformersFunction>
 }
 
 
@@ -10,9 +11,11 @@ export type Builder = {
  * Middleware function type.
  * @param req - The request object.
  * @param res - The response object.
- * @throws {MiddlewaresError} - Throws MiddlewaresError if an error occurs.
+ * @throws {APIError} - Throws ApiError if an error occurs.
  */
 
 type MiddlewaresFunction = (req: Request, res: Response) => void
+
+type DataTransformersFunction<T> = (req: Request, res: Response, data: object | Array<any>, ...args: any[]) => T
 
 type RequestType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
