@@ -1,0 +1,21 @@
+{
+  "name": "api-core",
+  "version": "1.0.0",
+  "description": "This API core will take json file with a certain format to build api you have two ways to use it loader or builder look at the package.json znd the README if there is non indication contact Dorian at dorian.pio@epitech.eu",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "DorianPio",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.11.27",
+    "express": "^4.18.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  }
+}
