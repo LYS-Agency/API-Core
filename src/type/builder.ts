@@ -1,9 +1,14 @@
 export type Builder = {
   name: string;
   path: string;
+  schema: string;
+  function: string;
   request: RequestType;
-  middlewares: Array<MiddlewaresFunction>;
-  dataTransformers: Array<DataTransformersFunction>;
+  middlewares?: Array<MiddlewaresFunction>;
+  dataTransformers?: Array<DataTransformersFunction>;
+  cachedData?: boolean;
+  protected?: boolean;
+  codeSpace?: codeSpace;
 };
 
 /**
@@ -13,7 +18,7 @@ export type Builder = {
  * @throws {APIError} - Throws ApiError if an error occurs.
  */
 
-type MiddlewaresFunction = (req: Request, res: Response) => void;
+type MiddlewaresFunction = <ErrorT>(req: Request, res: Response) => void;
 
 type DataTransformersFunction = <T>(
   req: Request,
@@ -23,3 +28,9 @@ type DataTransformersFunction = <T>(
 ) => T;
 
 type RequestType = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+type codeSpace = Array<mapCodeSpace>
+
+type CallbackCodeSpace<T> = (error?: Error, data?: T) => void;
+
+type mapCodeSpace = { step: number, function: (req: Request, res: Response,...args: any[], callback: CallbackCodeSpace<T>) => void }
