@@ -29,8 +29,18 @@ type DataTransformersFunction = <T>(
 
 type RequestType = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-type codeSpace = Array<mapCodeSpace>
+type codeSpace = Array<mapCodeSpace>;
 
 type CallbackCodeSpace<T> = (error?: Error, data?: T) => void;
 
-type mapCodeSpace = { step: number, function: (req: Request, res: Response,...args: any[], callback: CallbackCodeSpace<T>) => void }
+type mapCodeSpace = {
+  step: number;
+  function: <T>(
+    req: Request,
+    res: Response,
+    callback: CallbackCodeSpace<T>,
+    ...args: any[]
+  ) => void;
+};
+
+export type ActionKey = 'LOADER' | 'BUILDER';

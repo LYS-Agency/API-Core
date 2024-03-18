@@ -1,3 +1,3 @@
-export function quit(message: T) {
-    console.log(message)
+export function quit(message: string) {
+  console.log(message);
 }
