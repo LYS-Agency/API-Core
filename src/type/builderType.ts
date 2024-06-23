@@ -2,8 +2,12 @@ export type Builder = {
   name: string;
   path: string;
   schema: string;
-  function: string;
+  functionDB: string;
   request: RequestType;
+  params?: {
+    key: string;
+    getter: 'query' | 'body' | ((req: any, res: any) => Promise<string>);
+  }[];
   middlewares?: Array<MiddlewaresFunction>;
   dataTransformers?: Array<DataTransformersFunction>;
   cachedData?: boolean;
@@ -27,7 +31,7 @@ type DataTransformersFunction = <T>(
   ...args: any[]
 ) => T;
 
-type RequestType = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+type RequestType = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 type codeSpace = Array<mapCodeSpace>;
 

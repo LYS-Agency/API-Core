@@ -2,9 +2,8 @@ import { readFileSync } from 'fs';
 import { RuntimeError } from '../errors/ErrorsList/RuntimeError';
 import { manageError } from '../errors/manageError';
 import { quit } from '../errors/quitter';
-import { Builder } from '../type/builder';
-import { createRoutes } from './createRoutes';
-import { ENV } from './env/env';
+import { Builder } from '../type/builderType';
+import { ENV } from './envClass/envClass';
 
 export function apiBuilder(): void {
   const envPath =
@@ -14,9 +13,9 @@ export function apiBuilder(): void {
     readFileSync(String(envPath), { encoding: 'utf-8' }),
   );
 
-  builderField.every(isAValidField)
-    ? createRoutes(builderField as Array<Builder>)
-    : quit('StepBuilding');
+  // builderField.every(isAValidField)
+  //   ? createRoutes(builderField as Array<Builder>)
+  //   : quit('StepBuilding');
 }
 
 // TODO NEED TO REFACTOR IT
