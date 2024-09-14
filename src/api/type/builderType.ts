@@ -1,19 +1,58 @@
+import { Model } from 'mongoose';
+
+export type ModelFunctions_<Keys extends keyof Model<any>> =
+  Keys extends keyof any
+    ? Model<any>[Keys] extends (...args: any[]) => any
+      ? Keys
+      : never
+    : never;
+
+/**
+ * It's returning the current pure object
+ * Likre all the Model content and not the User content or Trainers...
+ */
+export type ModelFunctions = ModelFunctions_<keyof Model<any>>;
+
+/**
+ * // type TMP4<K extends string> = K extends `$${infer R}` ? R : never;
+ * // type TMP5 = TMP4<ModelFunctions>;
+ *
+ * Return all the sring with a $ and delete it
+ */
+
+type TMP4<K extends string> = K extends `$${any}` ? never : K;
+export type ModelFunctionList = TMP4<ModelFunctions> | 'none';
+
 export type Builder = {
   name: string;
   path: string;
-  schema: string;
-  functionDB: string;
   request: RequestType;
+  schema: Model<any>;
   params?: {
     key: string;
     getter: 'query' | 'body' | ((req: any, res: any) => Promise<string>);
+    mandatory: boolean;
   }[];
   middlewares?: Array<MiddlewaresFunction>;
   dataTransformers?: Array<DataTransformersFunction>;
   cachedData?: boolean;
   protected?: boolean;
   codeSpace?: codeSpace;
+  functionPropeties: {
+    functionDB: ModelFunctionList | 'none';
+    request: string;
+  };
+  pagination?: {
+    limit: {
+      getter: 'query' | 'body';
+    };
+    offset: {
+      getter: 'query' | 'body';
+    };
+  };
 };
+
+export type BuilderParams = Builder['params'];
 
 /**
  * Middleware function type.

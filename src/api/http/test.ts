@@ -1,17 +1,18 @@
+import { User } from '../../custom/database/Schemas/Users';
 import { makeRoute } from '../createRoutes';
 
 export const testRoutes = () => {
   return makeRoute([
     {
+      schema: User,
       name: 'Test Get',
-      request: 'get',
-      functionDB: 'find',
+      request: 'post',
       path: '/test',
-      schema: 'users',
-      params: [
-        { key: 'test2', getter: 'body' },
-        { key: 'test2', getter: 'query' },
-      ],
+      params: [{ key: 'name', getter: 'body', mandatory: true }],
+      functionPropeties: {
+        functionDB: 'create',
+        request: '{name: req.body.name}',
+      },
     },
   ]);
 };

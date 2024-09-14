@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { app } from '..';
+import { ENV } from './envClass/envClass';
 import { testRoutes } from './http/test';
 
 function mergeRoutes(): Router[] {
@@ -16,6 +17,6 @@ export function apiLoader() {
   const allRouters: any[] = mergeRoutes();
 
   for (const router of allRouters) {
-    app.use('/api', router.router);
+    app.use(`/api/v${ENV.getVar('VERSION')}`, router.router);
   }
 }
